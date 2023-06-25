@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoapp.databinding.ItemCoinInfoBinding
 import com.example.cryptoapp.domain.CoinInfo
-import com.squareup.picasso.Picasso
 
 class CoinInfoAdapter(private val context: Context) :
-	RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
+	RecyclerView.Adapter<CoinInfoViewHolder>() {
 
 	var coinInfoList: List<CoinInfo> = listOf()
 		set(value) {
@@ -28,20 +27,7 @@ class CoinInfoAdapter(private val context: Context) :
 
 	override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
 		val coin = coinInfoList[position]
-		holder.binding(coin) {
-			onCoinClickListener?.onCoinClick(it)
-		}
-	}
-
-	inner class CoinInfoViewHolder(private val binding: ItemCoinInfoBinding) :
-		RecyclerView.ViewHolder(binding.root) {
-		fun binding(coinInfo: CoinInfo, clickListener: (CoinInfo) -> Unit) {
-			binding.item = coinInfo
-			Picasso.get().load(coinInfo.imageUrl).into(binding.ivLogoCoin)
-			binding.root.setOnClickListener {
-				clickListener(coinInfo)
-			}
-		}
+		holder.binding(coin) { onCoinClickListener?.onCoinClick(it) }
 	}
 
 	interface OnCoinClickListener {
