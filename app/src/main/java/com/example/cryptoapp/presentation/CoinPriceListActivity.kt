@@ -33,10 +33,9 @@ class CoinPriceListActivity : AppCompatActivity() {
 
 		setContentView(binding.root)
 
-
 		viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 		viewModel.priceList.observe(this) {
-			adapter.coinInfoList = it
+			adapter.submitList(it)
 		}
 	}
 }
