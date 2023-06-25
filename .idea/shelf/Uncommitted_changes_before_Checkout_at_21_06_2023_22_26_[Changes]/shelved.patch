@@ -1,0 +1,116 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\n\r\napply plugin: 'kotlin-android'\r\n\r\napply plugin: 'kotlin-android-extensions'\r\n\r\napply plugin: 'kotlin-kapt'\r\n\r\nandroid {\r\n    compileSdkVersion 31\r\n    defaultConfig {\r\n        applicationId \"com.example.cryptoapp\"\r\n        minSdkVersion 19\r\n        targetSdkVersion 31\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_11\r\n        targetCompatibility JavaVersion.VERSION_11\r\n    }\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation 'androidx.appcompat:appcompat:1.6.1'\r\n    implementation 'androidx.core:core-ktx:1.10.1'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    implementation 'androidx.recyclerview:recyclerview:1.3.0'\r\n    implementation 'androidx.cardview:cardview:1.0.0'\r\n\r\n    implementation \"org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1\"\r\n    implementation \"org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4\"\r\n\r\n    implementation 'com.squareup.retrofit2:retrofit:2.9.0'\r\n    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'\r\n\r\n    implementation \"androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0\"\r\n\r\n    def room_version = \"2.3.0\"\r\n\r\n    implementation(\"androidx.room:room-runtime:$room_version\")\r\n    kapt(\"androidx.room:room-compiler:$room_version\")\r\n    implementation(\"androidx.room:room-ktx:$room_version\")\r\n\r\n    implementation 'com.squareup.picasso:picasso:2.71828'\r\n\r\n    implementation 'androidx.work:work-runtime-ktx:2.7.0'\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	
++++ b/app/build.gradle	
+@@ -7,19 +7,24 @@
+ apply plugin: 'kotlin-kapt'
+ 
+ android {
+-    compileSdkVersion 31
++    compileSdkVersion 33
+     defaultConfig {
+         applicationId "com.example.cryptoapp"
+         minSdkVersion 19
+-        targetSdkVersion 31
++        targetSdkVersion 33
+         versionCode 1
+         versionName "1.0"
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+     }
+     compileOptions {
+-        sourceCompatibility JavaVersion.VERSION_11
+-        targetCompatibility JavaVersion.VERSION_11
++        sourceCompatibility JavaVersion.VERSION_1_8
++        targetCompatibility JavaVersion.VERSION_1_8
+     }
++
++    kotlinOptions {
++        jvmTarget = '1.8'
++    }
++
+     buildTypes {
+         release {
+             minifyEnabled false
+@@ -29,26 +34,42 @@
+ }
+ 
+ dependencies {
++
++    implementation 'androidx.core:core-ktx:1.7.0'
+     implementation 'androidx.appcompat:appcompat:1.6.1'
+-    implementation 'androidx.core:core-ktx:1.10.1'
++    implementation 'com.google.android.material:material:1.9.0'
+     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+-    implementation 'androidx.cardview:cardview:1.0.0'
++    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
++    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
++    testImplementation 'junit:junit:4.13.2'
++    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
++    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
++    implementation 'androidx.fragment:fragment-ktx:1.6.0'
++    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
++
++    // Gson
++    implementation 'com.google.code.gson:gson:2.10.1'
++    implementation 'com.github.bumptech.glide:glide:4.15.1'
+ 
+-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
++    // Glide
++    implementation 'com.github.bumptech.glide:glide:4.15.1'
++
++    // Swipe refresh layout
++    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
++
++    // Room
++    implementation "androidx.room:room-runtime:2.5.1"
++    implementation "androidx.room:room-ktx:2.5.1"
++    kapt "androidx.room:room-compiler:2.5.1"
++
++    // viewModel
++    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
++    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
++
++    // coroutines
++    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+ 
+-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+-
+-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+-
+-    def room_version = "2.3.0"
+-
+-    implementation("androidx.room:room-runtime:$room_version")
+-    kapt("androidx.room:room-compiler:$room_version")
+-    implementation("androidx.room:room-ktx:$room_version")
+-
+     implementation 'com.squareup.picasso:picasso:2.71828'
+ 
+     implementation 'androidx.work:work-runtime-ktx:2.7.0'
+Index: app/src/main/java/com/example/cryptoapp/presintation/CoinDetailActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cryptoapp.presintation\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.example.cryptoapp.R\r\nimport com.squareup.picasso.Picasso\r\nimport kotlinx.android.synthetic.main.activity_coin_detail.*\r\n\r\nclass CoinDetailActivity : AppCompatActivity() {\r\n\r\n  private lateinit var viewModel: CoinViewModel\r\n\r\n  override fun onCreate(savedInstanceState: Bundle?) {\r\n    super.onCreate(savedInstanceState)\r\n    setContentView(R.layout.activity_coin_detail)\r\n    if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {\r\n      finish()\r\n      return\r\n    }\r\n    val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: \"\"\r\n    viewModel = ViewModelProvider(this)[CoinViewModel::class.java]\r\n    viewModel.getDetailInfo(fromSymbol).observe(this, Observer {\r\n      tvPrice.text = it.price\r\n      tvMinPrice.text = it.lowDay\r\n      tvMaxPrice.text = it.highDay\r\n      tvLastMarket.text = it.lastMarket\r\n//      tvLastUpdate.text = it.getFormattedTime()\r\n      tvFromSymbol.text = it.fromSymbol\r\n      tvToSymbol.text = it.toSymbol\r\n//      Picasso.get().load(it.getFullImageUrl()).into(ivLogoCoin)\r\n    })\r\n  }\r\n\r\n  companion object {\r\n    private const val EXTRA_FROM_SYMBOL = \"fSym\"\r\n\r\n    fun newIntent(context: Context, fromSymbol: String): Intent {\r\n      val intent = Intent(context, CoinDetailActivity::class.java)\r\n      intent.putExtra(EXTRA_FROM_SYMBOL, fromSymbol)\r\n      return intent\r\n    }\r\n  }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/cryptoapp/presintation/CoinDetailActivity.kt b/app/src/main/java/com/example/cryptoapp/presintation/CoinDetailActivity.kt
+--- a/app/src/main/java/com/example/cryptoapp/presintation/CoinDetailActivity.kt	
++++ b/app/src/main/java/com/example/cryptoapp/presintation/CoinDetailActivity.kt	
+@@ -4,10 +4,7 @@
+ import android.content.Intent
+ import android.os.Bundle
+ import androidx.appcompat.app.AppCompatActivity
+-import androidx.lifecycle.Observer
+-import androidx.lifecycle.ViewModelProvider
+ import com.example.cryptoapp.R
+-import com.squareup.picasso.Picasso
+ import kotlinx.android.synthetic.main.activity_coin_detail.*
+ 
+ class CoinDetailActivity : AppCompatActivity() {
