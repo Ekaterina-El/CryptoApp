@@ -26,6 +26,7 @@ class CoinPriceListActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 
 		binding = ActivityCoinPrceListBinding.inflate(layoutInflater)
+		binding.rvCoinPriceList.itemAnimator = null
 		binding.apply {
 			adapter = this@CoinPriceListActivity.adapter
 			lifecycleOwner
