@@ -3,6 +3,7 @@ package com.example.cryptoapp.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinPrceListBinding
 import com.example.cryptoapp.domain.CoinInfo
 import com.example.cryptoapp.presentation.adapters.CoinInfoAdapter
@@ -14,9 +15,18 @@ class CoinPriceListActivity : AppCompatActivity() {
 		val adapter = CoinInfoAdapter(this)
 		adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
 			override fun onCoinClick(coinInfo: CoinInfo) {
-				val intent =
-					CoinDetailActivity.newIntent(this@CoinPriceListActivity, coinInfo.fromSymbol)
-				startActivity(intent)
+				val isLand = binding.coinDetailContainer2 != null
+				if (isLand) {
+					val fragment = CoinDetailFragment.newInstance(coinInfo.fromSymbol)
+					supportFragmentManager.popBackStack()
+					supportFragmentManager.beginTransaction()
+						.replace(R.id.coin_detail_container_2, fragment)
+						.addToBackStack(null)
+						.commit()
+				} else {
+					val intent = CoinDetailActivity.newIntent(this@CoinPriceListActivity, coinInfo.fromSymbol)
+					startActivity(intent)
+				}
 			}
 		}
 		return@lazy adapter
