@@ -1,5 +1,6 @@
 package com.example.cryptoapp.data.workers
 
+import android.app.Application
 import android.content.Context
 import androidx.work.*
 import com.example.cryptoapp.data.database.AppDatabase
@@ -7,10 +8,10 @@ import com.example.cryptoapp.data.mapper.CoinMapper
 import com.example.cryptoapp.data.network.ApiFactory
 import kotlinx.coroutines.delay
 
-class RefreshDataWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(
-	context, workerParams
+class RefreshDataWorker(application: Application, workerParams: WorkerParameters) : CoroutineWorker(
+	application, workerParams
 ) {
-	private val coinInfoDao = AppDatabase.getInstance(context).coinPriceInfoDao()
+	private val coinInfoDao = AppDatabase.getInstance(application).coinPriceInfoDao()
 	private val apiService = ApiFactory.apiService
 	private val mapper = CoinMapper()
 

@@ -7,10 +7,19 @@ import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityCoinPrceListBinding
 import com.example.cryptoapp.domain.CoinInfo
 import com.example.cryptoapp.presentation.adapters.CoinInfoAdapter
+import javax.inject.Inject
 
 class CoinPriceListActivity : AppCompatActivity() {
+	@Inject
+	lateinit var viewModelFactory: ViewModelFactory
+	private val viewModel: CoinViewModel by lazy {
+		ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
+	}
+	private val component by lazy {
+		(application as CoinApplication).component.activityComponentFactory().create()
+	}
+
 	private lateinit var binding: ActivityCoinPrceListBinding
-	private lateinit var viewModel: CoinViewModel
 	private val adapter by lazy {
 		val adapter = CoinInfoAdapter(this)
 		adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
@@ -19,10 +28,8 @@ class CoinPriceListActivity : AppCompatActivity() {
 				if (isLand) {
 					val fragment = CoinDetailFragment.newInstance(coinInfo.fromSymbol)
 					supportFragmentManager.popBackStack()
-					supportFragmentManager.beginTransaction()
-						.replace(R.id.coin_detail_container_2, fragment)
-						.addToBackStack(null)
-						.commit()
+					supportFragmentManager.beginTransaction().replace(R.id.coin_detail_container_2, fragment)
+						.addToBackStack(null).commit()
 				} else {
 					val intent = CoinDetailActivity.newIntent(this@CoinPriceListActivity, coinInfo.fromSymbol)
 					startActivity(intent)
@@ -43,8 +50,8 @@ class CoinPriceListActivity : AppCompatActivity() {
 		}
 
 		setContentView(binding.root)
+		component.inject(this)
 
-		viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 		viewModel.priceList.observe(this) {
 			adapter.submitList(it)
 		}
